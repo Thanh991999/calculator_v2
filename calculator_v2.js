@@ -12,8 +12,9 @@ class Calculator {
     this.darkmodeBtn     = document.querySelector('.header__menu');
     this.app             = document.querySelector('.app');
     this.screen          = document.querySelector('.screen');
-    this.history         = document.querySelector('.header_history');
+    this.history         = document.querySelector('.drawer__history');
     this.countResult     = 0;
+    this.arrHistory      = [];
 
     this.clear();
     this.renderDisplay();
@@ -58,11 +59,25 @@ class Calculator {
 
     this.deleteBtn.onclick = function() {
       if (typeof(_this.operandCurrent) === 'number') return
-      _this.operandCurrent = _this.operandCurrent.slice(0, _this.operandCurrent.length - 1);
+
+      // _this.deleteParentheses(_this.operandCurrent);
+
+      let valueInputArray = _this.operandCurrent.split("");
+      if (valueInputArray[valueInputArray.length-1] == undefined) return;
+
+      if (valueInputArray[valueInputArray.length-1] == '(') {
+        console.log(1);
+        _this.operandCurrent = _this.operandCurrent.slice(0, _this.operandCurrent.length - 1);
+        _this.displayCurrent.setAttribute('parenses', ')'.repeat(Math.max((_this.displayCurrent.getAttribute('parenses') || '').length-1, 0)));
+      }
+      else {
+        _this.operandCurrent = _this.operandCurrent.slice(0, _this.operandCurrent.length - 1);
+      }
+
 
       //  remove ()
-      if (_this.displayCurrent.getAttribute('parenses').length < 1) return false;
-      _this.displayCurrent.setAttribute('parenses', ')'.repeat(Math.max((_this.displayCurrent.getAttribute('parenses') || '').length-1, 0)));
+      // if (_this.displayCurrent.getAttribute('parenses').length < 1) return false;
+      // _this.displayCurrent.setAttribute('parenses', ')'.repeat(Math.max((_this.displayCurrent.getAttribute('parenses') || '').length-1, 0)));
 
       _this.renderDisplay();
     }
@@ -71,6 +86,7 @@ class Calculator {
       if (_this.countResult > 0) return
       _this.calculate();
       _this.renderDisplay();
+      _this.historyFeature(_this.displayPrevious.innerText, _this.operandCurrent)
       _this.countResult ++;
     }
 
@@ -78,9 +94,9 @@ class Calculator {
       _this.app.classList.toggle('dark');
     }
 
-    this.history.onclick = function() {
-      console.log('This is history');
-    }
+    // this.history.onclick = function() {
+    //   console.log('This is history');
+    // }
 
     window.addEventListener('keydown', (k) => {
       let keyInput = k.which;
@@ -198,7 +214,18 @@ class Calculator {
       this.renderDisplay();
     } else if (keyInput == 8 || keyInput == 46) {
       if (typeof(this.operandCurrent) === 'number') return
-      this.operandCurrent = this.operandCurrent.slice(0, this.operandCurrent.length - 1);
+      // this.operandCurrent = this.operandCurrent.slice(0, this.operandCurrent.length - 1);
+      let valueInputArray = this.operandCurrent.split("");
+      if (valueInputArray[valueInputArray.length-1] == undefined) return;
+
+      if (valueInputArray[valueInputArray.length-1] == '(') {
+        console.log(1);
+        this.operandCurrent = this.operandCurrent.slice(0, this.operandCurrent.length - 1);
+        this.displayCurrent.setAttribute('parenses', ')'.repeat(Math.max((this.displayCurrent.getAttribute('parenses') || '').length-1, 0)));
+      }
+      else {
+        this.operandCurrent = this.operandCurrent.slice(0, this.operandCurrent.length - 1);
+      }
       this.renderDisplay();
     }
     else if (keyInput == 187 || keyInput == 13 ) {
@@ -213,10 +240,17 @@ class Calculator {
     }
   }
 
-  historyFeature() {
-    //  viet tinh nang luu lich su phep tinh
-
-  }
+  // historyFeature(a , b) {
+  //   //  viet tinh nang luu lich su phep tinh
+  //   let valueHistory = `${a}${b}`
+  //   console.log(valueHistory);
+  //   this.history.innerText = valueHistory;
+  //   this.arrHistory.push(valueHistory);
+  //   console.log(this.arrHistory);
+  //   this.arrHistory.map((element) => {
+  //     return `<li>${element}</li>`
+  //   })
+  // }
 
   calculate() {
     if (this.displayCurrent.getAttribute('parenses')) {
