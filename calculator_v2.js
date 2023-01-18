@@ -86,7 +86,7 @@ class Calculator {
       if (_this.countResult > 0) return
       _this.calculate();
       _this.renderDisplay();
-      _this.historyFeature(_this.displayPrevious.innerText, _this.operandCurrent)
+      // _this.historyFeature(_this.displayPrevious.innerText, _this.operandCurrent)
       _this.countResult ++;
     }
 
