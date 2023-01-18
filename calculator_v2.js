@@ -14,7 +14,7 @@ class Calculator {
     this.screen          = document.querySelector('.screen');
     this.history         = document.querySelector('.drawer__history');
     this.countResult     = 0;
-    this.arrHistory      = [];
+    // this.arrHistory      = [];
 
     this.clear();
     this.renderDisplay();
@@ -271,6 +271,5 @@ class Calculator {
     }
   }
 }
-
 
 const calculatorObj = new Calculator();
