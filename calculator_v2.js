@@ -271,6 +271,5 @@ class Calculator {
     }
   }
 }
-console(123)
 
 const calculatorObj = new Calculator();
