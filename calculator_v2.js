@@ -260,6 +260,7 @@ class Calculator {
 
     try {
       let result = eval(this.operandCurrent);
+      if (isNaN(result)) return
       result = Math.round((result + Number.EPSILON) * 100) / 100;
       result = (result != "Infinity") ? result : 'Cannot divide by zero';
 
