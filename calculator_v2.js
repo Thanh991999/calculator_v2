@@ -272,4 +272,5 @@ class Calculator {
   }
 }
 
+
 const calculatorObj = new Calculator();
