@@ -208,7 +208,7 @@ class Calculator {
 
   keyboardInput(keyInput, keyValue, isShift) {
     console.log(keyInput, keyValue);
-    if (keyInput > 48 && keyInput < 56 && !isShift || keyInput == 56 || keyInput == 57 || keyInput == 48 || keyInput == 187
+    if (keyInput > 48 && keyInput < 56 && !isShift || keyInput == 56 || keyInput == 57 || keyInput == 48 || keyInput == 187 && isShift
       || keyInput == 189 && !isShift || keyInput == 191 && !isShift || keyInput == 190 && !isShift) {
       this.appendNumber(keyValue);
       this.renderDisplay();
