@@ -62,18 +62,18 @@ class Calculator {
 
       // _this.deleteParentheses(_this.operandCurrent);
 
-      let valueInputArray = _this.operandCurrent.split("");
+      let valueInputArray = _this.operandCurrent.split('');
       if (valueInputArray[valueInputArray.length-1] == undefined) return;
 
       if (valueInputArray[valueInputArray.length-1] == '(') {
         console.log(1);
-        _this.operandCurrent = _this.operandCurrent.slice(0, _this.operandCurrent.length - 1);
         _this.displayCurrent.setAttribute('parenses', ')'.repeat(Math.max((_this.displayCurrent.getAttribute('parenses') || '').length-1, 0)));
       }
-      else {
-        _this.operandCurrent = _this.operandCurrent.slice(0, _this.operandCurrent.length - 1);
+      else if (valueInputArray[valueInputArray.length-1] == ')') {
+        _this.displayCurrent.setAttribute('parenses', ')'.repeat((_this.displayCurrent.getAttribute('parenses') || '').length+1));
       }
 
+      _this.operandCurrent = _this.operandCurrent.slice(0, _this.operandCurrent.length - 1);
 
       //  remove ()
       // if (_this.displayCurrent.getAttribute('parenses').length < 1) return false;
@@ -150,7 +150,9 @@ class Calculator {
 
   cleanInput(valueInput, key) {
     // check +,-,*,/
-    let valueInputArray = valueInput.split("");
+    let valueInputArray = valueInput.split('');
+
+    console.log(valueInputArray);
 
     if (this.isOperand(key) && this.isOperand(valueInputArray[valueInputArray.length - 2]) && key == '-') {
       if (valueInputArray[valueInputArray.length - 2] == '-') {
@@ -163,17 +165,17 @@ class Calculator {
         valueInputArray.splice(-3, 2);
       }
       else {
-        console.log(1);
         valueInputArray.splice(-2, 2, key.toString());
       }
     }
-    valueInput = valueInputArray.join("");
+    valueInput = valueInputArray.join('');
 
     return valueInput;
   }
 
   checkParenses(key) {
     if (key  == '(') {
+      console.log((this.displayCurrent.getAttribute('parenses')));
       this.displayCurrent.setAttribute('parenses', ')'.repeat((this.displayCurrent.getAttribute('parenses') || '').length+1));
     }
     else if (key == ')') {
@@ -185,7 +187,7 @@ class Calculator {
   }
 
   handleUserBehavior(valueInput) {
-    let valueInputArray = valueInput.split("");
+    let valueInputArray = valueInput.split('');
     if (this.isOperand(valueInputArray[0]) && valueInputArray[0] != '-'){
       valueInputArray.splice(0, 0, '0');
     }
@@ -203,7 +205,7 @@ class Calculator {
       }
     }
 
-    return valueInputArray.join("");
+    return valueInputArray.join('');
   }
 
   keyboardInput(keyInput, keyValue, isShift) {
@@ -213,19 +215,21 @@ class Calculator {
       this.appendNumber(keyValue);
       this.renderDisplay();
     } else if (keyInput == 8 || keyInput == 46) {
+      console.log(this.operandCurrent);
       if (typeof(this.operandCurrent) === 'number') return
       // this.operandCurrent = this.operandCurrent.slice(0, this.operandCurrent.length - 1);
-      let valueInputArray = this.operandCurrent.split("");
+      let valueInputArray = this.operandCurrent.split('');
       if (valueInputArray[valueInputArray.length-1] == undefined) return;
 
       if (valueInputArray[valueInputArray.length-1] == '(') {
         console.log(1);
-        this.operandCurrent = this.operandCurrent.slice(0, this.operandCurrent.length - 1);
         this.displayCurrent.setAttribute('parenses', ')'.repeat(Math.max((this.displayCurrent.getAttribute('parenses') || '').length-1, 0)));
       }
-      else {
-        this.operandCurrent = this.operandCurrent.slice(0, this.operandCurrent.length - 1);
+      else if (valueInputArray[valueInputArray.length-1] == ')') {
+        this.displayCurrent.setAttribute('parenses', ')'.repeat((this.displayCurrent.getAttribute('parenses') || '').length+1));
       }
+      this.operandCurrent = this.operandCurrent.slice(0, this.operandCurrent.length - 1);
+
       this.renderDisplay();
     }
     else if (keyInput == 187 || keyInput == 13 ) {
