@@ -45,7 +45,7 @@ class Calculator {
     const _this = this;
 
     this.numberBtns.forEach(function(numberBtn) {
-      numberBtn.addEventListener("click", (e) => {
+      numberBtn.addEventListener('click', (e) => {
         let number = e.target.textContent;
         _this.appendNumber(number);
         _this.renderDisplay();
@@ -209,7 +209,7 @@ class Calculator {
   keyboardInput(keyInput, keyValue, isShift) {
     console.log(keyInput, keyValue);
     if (keyInput > 48 && keyInput < 56 && !isShift || keyInput == 56 || keyInput == 57 || keyInput == 48 || keyInput == 187 && isShift
-      || keyInput == 189 && !isShift || keyInput == 191 && !isShift || keyInput == 190 && !isShift) {
+      || keyInput == 189 && !isShift || keyInput == 191 && !isShift || keyInput == 190 && !isShift ) {
       this.appendNumber(keyValue);
       this.renderDisplay();
     } else if (keyInput == 8 || keyInput == 46) {
@@ -262,7 +262,7 @@ class Calculator {
       let result = eval(this.operandCurrent);
       if (isNaN(result)) return
       result = Math.round((result + Number.EPSILON) * 100) / 100;
-      result = (result != "Infinity") ? result : 'Cannot divide by zero';
+      result = (result != 'Infinity') ? result : 'Cannot divide by zero';
 
       this.operandPrevious = this.operandCurrent;
       this.operandCurrent = result;
