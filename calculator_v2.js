@@ -12,9 +12,13 @@ class Calculator {
     this.darkmodeBtn     = document.querySelector('.header__menu');
     this.app             = document.querySelector('.app');
     this.screen          = document.querySelector('.screen');
-    this.history         = document.querySelector('.drawer__history');
+    this.drawer          = document.querySelector('.drawer');
+    this.historyList         = document.querySelector('.drawer__history');
+    this.history         = document.querySelector('.header_history');
+
+    
     this.countResult     = 0;
-    // this.arrHistory      = [];
+    this.arrHistory      = [];
 
     this.clear();
     this.renderDisplay();
@@ -86,7 +90,7 @@ class Calculator {
       if (_this.countResult > 0) return
       _this.calculate();
       _this.renderDisplay();
-      // _this.historyFeature(_this.displayPrevious.innerText, _this.operandCurrent)
+      _this.historyFeature(_this.displayPrevious.innerText, _this.operandCurrent);
       _this.countResult ++;
     }
 
@@ -94,9 +98,9 @@ class Calculator {
       _this.app.classList.toggle('dark');
     }
 
-    // this.history.onclick = function() {
-    //   console.log('This is history');
-    // }
+    this.history.onclick = function() {
+      _this.drawer.classList.toggle('open');
+    }
 
     window.addEventListener('keydown', (k) => {
       let keyInput = k.which;
@@ -244,17 +248,22 @@ class Calculator {
     }
   }
 
-  // historyFeature(a , b) {
-  //   //  viet tinh nang luu lich su phep tinh
-  //   let valueHistory = `${a}${b}`
-  //   console.log(valueHistory);
-  //   this.history.innerText = valueHistory;
-  //   this.arrHistory.push(valueHistory);
-  //   console.log(this.arrHistory);
-  //   this.arrHistory.map((element) => {
-  //     return `<li>${element}</li>`
-  //   })
-  // }
+  historyFeature(a , b) {
+    //  viet tinh nang luu lich su phep tinh
+    let valueHistory = `${a}${b}`
+    console.log(valueHistory);
+    this.arrHistory.push(valueHistory);
+    this.arrHistory = [...this.arrHistory];
+    console.log(this.arrHistory);
+    const html  = this.arrHistory.map((element) => {
+      return `<li class="history__item">
+        <span>${element}</span>
+        <i class="bi bi-x delete-icon"></i>
+      </li>`
+    })
+    this.historyList.innerHTML = html.join('');;
+
+  }
 
   calculate() {
     if (this.displayCurrent.getAttribute('parenses')) {
